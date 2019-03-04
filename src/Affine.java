@@ -5,12 +5,10 @@ import java.util.Scanner;
 
 public class Affine {
     private static int alphabetLength = 26;
-    private Scanner reader = new Scanner(System.in);
+    private static Scanner reader = new Scanner(System.in);
 
     public static void encrypt(String sentence) {
-        Random random = new Random();
-        System.out.println(createListParametersA());
-        System.out.println(findAllDivisors());
+        System.out.println(checkFirstKey());
 
 //        System.out.print("Please provide second key to encrypt: ");
 //        int secondKey = Integer.parseInt(reader.nextLine());
@@ -27,18 +25,28 @@ public class Affine {
         return lettersAndNumbers;
     }
 
-    public int checkFirstKey() {
-        int[] functionParameterA = {1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25};
-        int firstKey = 0;
+    public static int checkFirstKey() {
+        ArrayList<Integer> functionParameterA = createListParametersA();
 
+        int firstKey = 0;
         boolean keyInFunction = false;
+
+
+        System.out.print("The key need to be in values:" );
+        for (int number : functionParameterA) {
+            System.out.print(number + ", ");
+        }
+        System.out.println();
+
         while (!keyInFunction) {
+
             System.out.print("Please provide first key to encrypt: ");
             firstKey = Integer.parseInt(reader.nextLine());
-
+            if (functionParameterA.contains(firstKey)) {
+                keyInFunction = true;
+            }
         }
-
-
+        return firstKey;
     }
 
     private static ArrayList<Integer> createListParametersA() {
