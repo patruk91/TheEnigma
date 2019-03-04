@@ -27,9 +27,9 @@ public class Enigma {
                         isAnswerCorrect = validateInput(userInput);
                     }
                     if (args.length == 3) {
-                        CipherData(args[0], args[1], args[2], userInput);
+                        CipherData cipherData = new CipherData(args[0], args[1], args[2], userInput);
                     } else {
-                        CipherData(args[0], args[1], userInput);
+                        CipherData cipherData = new CipherData(args[0], args[1], userInput);
                     }
                 } else {
                     System.out.println("Please provide a correct cipher name");
