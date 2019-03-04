@@ -1,14 +1,11 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Affine {
     private static int alphabetLength = 26;
     private static Scanner reader = new Scanner(System.in);
 
     public static void encrypt(String sentence) {
-        System.out.println(checkFirstKey());
+        System.out.println(getFirstKey());
 
 //        System.out.print("Please provide second key to encrypt: ");
 //        int secondKey = Integer.parseInt(reader.nextLine());
@@ -25,25 +22,27 @@ public class Affine {
         return lettersAndNumbers;
     }
 
-    public static int checkFirstKey() {
+    public static int getFirstKey() {
         ArrayList<Integer> functionParameterA = createListParametersA();
 
+        String delimiter = ",";
+        System.out.print("The key need to be in values:" );
+        String result = String.join(delimiter, Arrays.asList(functionParameterA.toString()));
+        System.out.println(result);
+
+        String userInput;
         int firstKey = 0;
         boolean keyInFunction = false;
 
-
-        System.out.print("The key need to be in values:" );
-        for (int number : functionParameterA) {
-            System.out.print(number + ", ");
-        }
-        System.out.println();
-
         while (!keyInFunction) {
-
             System.out.print("Please provide first key to encrypt: ");
-            firstKey = Integer.parseInt(reader.nextLine());
-            if (functionParameterA.contains(firstKey)) {
-                keyInFunction = true;
+            userInput = reader.nextLine();
+
+            if (isNumeric(userInput)) {
+                firstKey = Integer.parseInt(userInput);
+                if (functionParameterA.contains(firstKey)) {
+                    keyInFunction = true;
+                }
             }
         }
         return firstKey;
@@ -75,6 +74,10 @@ public class Affine {
                 divisors.add(i);
             }
         return divisors;
+    }
+
+    public static boolean isNumeric(String number) {
+        return number != null && number.matches("[-+]?\\d*\\.?\\d+");
     }
 
 
