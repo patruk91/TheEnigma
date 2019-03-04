@@ -1,4 +1,3 @@
-import javax.xml.stream.FactoryConfigurationError;
 import java.util.Scanner;
 
 public class Enigma {
