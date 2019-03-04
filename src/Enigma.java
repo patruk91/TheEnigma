@@ -24,8 +24,11 @@ public class Enigma {
                     }
                     if (args.length == 3) {
                         CipherData cipherData = new CipherData(args[0], args[1], args[2], userInput);
+                        HandleCipher.decideMethodToCryptograph(cipherData);
                     } else {
                         CipherData cipherData = new CipherData(args[0], args[1], userInput);
+                        HandleCipher.decideMethodToCryptograph(cipherData);
+
                     }
                 } else {
                     System.out.println("Please provide a correct cipher name");

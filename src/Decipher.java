@@ -1,13 +1,7 @@
 public class Decipher {
     private CipherData cipherData;
 
-    public Decipher(CipherData cipherData) {
-        this.cipherData = cipherData;
-    }
-
-
-
-    public void chooseCipher() {
+    public static void chooseCipher(CipherData cipherData) {
         switch(cipherData.getCipherName()) {
             case "Affine":
                 Affine.decrypt(cipherData.getSentence());
@@ -30,7 +24,7 @@ public class Decipher {
                 break;
 
             case "Vigenere":
-                Vigenere.decrypt(cipherData.getSentence());
+                Vigenere.decrypt(cipherData);
                 break;
         }
     }

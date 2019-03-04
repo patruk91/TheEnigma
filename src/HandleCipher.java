@@ -1,15 +1,10 @@
 public class HandleCipher {
-    CipherData cipherData;
 
-    public HandleCipher(CipherData cipherData) {
-        this.cipherData = cipherData;
-    }
-
-    public void decideMethodToCryptograph() {
+    public static void decideMethodToCryptograph(CipherData cipherData) {
         if (cipherData.getOption().equals("-e")) {
-            //encrypt
+            Enciper.chooseCipher(cipherData);
         } else {
-            //decrypt
+            Decipher.chooseCipher(cipherData);
         }
     }
 }

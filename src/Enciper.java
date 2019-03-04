@@ -1,13 +1,7 @@
 public class Enciper {
     private CipherData cipherData;
 
-    public Enciper(CipherData cipherData) {
-        this.cipherData = cipherData;
-    }
-
-
-
-    public void chooseCipher() {
+    public static void chooseCipher(CipherData cipherData) {
         switch(cipherData.getCipherName()) {
             case "Affine":
                 Affine.encrypt(cipherData.getSentence());
@@ -30,7 +24,7 @@ public class Enciper {
                 break;
 
             case "Vigenere":
-                Vigenere.encrypt(cipherData.getSentence());
+                Vigenere.encrypt(cipherData);
                 break;
         }
     }
