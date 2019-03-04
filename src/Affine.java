@@ -6,6 +6,7 @@ public class Affine {
 
     public static void encrypt(String sentence) {
         System.out.println(getFirstKey());
+        System.out.println(getSecondKey());
 
 //        System.out.print("Please provide second key to encrypt: ");
 //        int secondKey = Integer.parseInt(reader.nextLine());
@@ -22,11 +23,11 @@ public class Affine {
         return lettersAndNumbers;
     }
 
-    public static int getFirstKey() {
+    private static int getFirstKey() {
         ArrayList<Integer> functionParameterA = createListParametersA();
 
         String delimiter = ",";
-        System.out.print("The key need to be in values:" );
+        System.out.print("First key need to be in values:" );
         String result = String.join(delimiter, Arrays.asList(functionParameterA.toString()));
         System.out.println(result);
 
@@ -47,6 +48,29 @@ public class Affine {
         }
         return firstKey;
     }
+    private static int getSecondKey() {
+        ArrayList<Integer> functionParameterB = createListParametersB();
+        System.out.print("Second key need to be between: 0 - " + (alphabetLength - 1) + "\n");
+
+        String userInput;
+        int secondKey = 0;
+        boolean keyInFunction = false;
+
+        while (!keyInFunction) {
+            System.out.print("Please provide first key to encrypt: ");
+            userInput = reader.nextLine();
+
+            if (isNumeric(userInput)) {
+                secondKey = Integer.parseInt(userInput);
+                if (functionParameterB.contains(secondKey)) {
+                    keyInFunction = true;
+                }
+            }
+        }
+        return secondKey;
+    }
+
+
 
     private static ArrayList<Integer> createListParametersA() {
         ArrayList<Integer> parametersA = new ArrayList<>();
@@ -64,6 +88,15 @@ public class Affine {
             }
         }
         return parametersA;
+    }
+
+    private static ArrayList<Integer> createListParametersB() {
+        ArrayList<Integer> parametersB = new ArrayList<>();
+
+        for (int number = 0; number < alphabetLength; number++) {
+            parametersB.add(number);
+        }
+        return parametersB;
     }
 
 
