@@ -34,4 +34,8 @@ public class CipherData {
     public String getSentence() {
         return sentence;
     }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
 }
