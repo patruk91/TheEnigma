@@ -4,6 +4,13 @@ public class Enigma {
     private static String[] ciphers = {"Affine", "Caesar", "ROT13", "PlayFair", "Trifid", "Vigenere"};
 
     public static void main(String[] args) {
+        if (checkCommandLineArguments(args)) {
+            constructCipherData(args);
+        }
+    }
+
+    private static boolean checkCommandLineArguments(String[] args) {
+        boolean result = false;
         if (args.length < 1 || args[0].equals("--help")) {
             handleHelpMenu();
         } else if (args[0].equals("-l")) {
@@ -12,25 +19,28 @@ public class Enigma {
             if (args.length < 2){
                 System.out.println("Options '-e' or '-d' required additional parameter: name of cipher");
             } else {
-                String userSentenceToProcess = "";
                 if (checkIfInCiphers(args[1])) {
-                    userSentenceToProcess = getSentenceFromUser();
-                    if (args.length == 3) {
-                        CipherData cipherData = new CipherData(args[0], args[1], args[2], userSentenceToProcess);
-                        HandleCipher.decideMethodToCryptograph(cipherData);
-                    } else {
-                        CipherData cipherData = new CipherData(args[0], args[1], userSentenceToProcess);
-                        HandleCipher.decideMethodToCryptograph(cipherData);
-
-                    }
+                    result = true;
                 } else {
                     System.out.println("Please provide a correct cipher name");
+                    result = false;
                 }
             }
         }
+        return result;
     }
 
+    private static void constructCipherData(String[] args) {
+        String userSentenceToProcess = getSentenceFromUser();
+            if (args.length == 3) {
+                CipherData cipherData = new CipherData(args[0], args[1], args[2], userSentenceToProcess);
+                HandleCipher.decideMethodToCryptograph(cipherData);
+            } else {
+                CipherData cipherData = new CipherData(args[0], args[1], userSentenceToProcess);
+                HandleCipher.decideMethodToCryptograph(cipherData);
 
+            }
+    }
     private static void nameOfCiphers() {
         System.out.println("Ciphers:");
         for (String cipher : ciphers) {
