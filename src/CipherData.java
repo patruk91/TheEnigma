@@ -38,4 +38,8 @@ public class CipherData {
     public void setKey(String key) {
         this.key = key;
     }
+
+    public void setSentence(String sentence) {
+        this.sentence = sentence;
+    }
 }
