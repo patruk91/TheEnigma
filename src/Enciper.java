@@ -8,7 +8,7 @@ public class Enciper {
                 // break;
 
             case "Caesar":
-                Caesar.encrypt(cipherData.getSentence());
+                Caesar.encrypt(cipherData);
                 break;
 
             case "ROT13":
