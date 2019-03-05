@@ -1,10 +1,9 @@
 public class Enciper {
-    private CipherData cipherData;
 
     public static void chooseCipher(CipherData cipherData) {
         switch(cipherData.getCipherName()) {
             case "Affine":
-                // Affine.encrypt(cipherData.getSentence());
+                 Affine.encrypt(cipherData.getSentence());
                 break;
 
             case "Caesar":
@@ -26,6 +25,7 @@ public class Enciper {
             case "Vigenere":
                 // Vigenere.encrypt(cipherData);
                 break;
+
         }
     }
 }
