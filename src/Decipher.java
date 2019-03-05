@@ -12,7 +12,7 @@ public class Decipher {
                 break;
 
             case "ROT13":
-                // ROT13.decrypt(cipherData.getSentence());
+                ROT13.encryptDecrypt(cipherData.getSentence());
                 break;
 
             case "PlayFair":
@@ -24,7 +24,7 @@ public class Decipher {
                 break;
 
             case "Vigenere":
-                Vigenere.decrypt(cipherData);
+                // Vigenere.decrypt(cipherData);
                 break;
         }
     }
