@@ -7,7 +7,9 @@ public class Trifid {
     }
 
     public static void encrypt(String sentence) {
-        System.out.println("Decrypted sentence: " + decryptSentence(5, sentence));
+//        System.out.println(getNumbersFromSentence(sentence));
+        System.out.println(encryptNumbers(5, sentence));
+//        System.out.println("Encrypted sentence: " + decryptSentence(5, sentence));
     }
 
     private static HashMap<String, Integer> createAlgorithmBy3Squares() {
@@ -90,6 +92,31 @@ public class Trifid {
             }
         }
         return decryptSentence;
+    }
+
+    private static ArrayList<Integer> encryptNumbers(int period, String sentence) {
+        ArrayList<String> getNumbersFromSentence = getNumbersFromSentence(sentence);
+        ArrayList<Integer> encryptNumbers = new ArrayList<>();
+
+        for (int from = 0; from <= getNumbersFromSentence.size(); from+=5) {
+            List<String> subListGetDecryptedNumbers = getNumbersFromSentence.subList(from, period);
+            period += 5;
+            if (period > getNumbersFromSentence.size()) {
+                period = getNumbersFromSentence.size();
+            }
+
+            System.out.println(subListGetDecryptedNumbers);
+            char[] result = String.join("", subListGetDecryptedNumbers).toCharArray();
+            int i = 0;
+            int sizeOfArr = subListGetDecryptedNumbers.size();
+            while (i != subListGetDecryptedNumbers.size()){
+                String value = "" +  result[i] + result[sizeOfArr + i] + result[sizeOfArr * 2 + i];
+                encryptNumbers.add(Integer.parseInt(value));
+                i++;
+            }
+
+        }
+        return encryptNumbers;
     }
 
 }
