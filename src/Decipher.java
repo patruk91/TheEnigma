@@ -2,7 +2,7 @@ public class Decipher {
     private CipherData cipherData;
 
     public static void chooseCipher(CipherData cipherData) {
-        switch(cipherData.getCipherName()) {
+        switch (cipherData.getCipherName()) {
             case "Affine":
                 Affine.decrypt(cipherData.getSentence());
                 break;
@@ -27,5 +27,6 @@ public class Decipher {
 //                Vigenere.decrypt(cipherData);
 //                break;
 //        }
+        }
     }
 }

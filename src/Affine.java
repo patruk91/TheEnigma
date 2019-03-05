@@ -8,43 +8,46 @@ public class Affine {
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
         ArrayList<Integer> cParameters = getCParameters(firstKey, secondKey, sentence);
-        StringBuilder decryptSentence = decrypt(cParameters);
+        StringBuilder decryptSentence = decryptOrEncrypt(cParameters);
         System.out.println("Decrypted sentence: " + decryptSentence);
     }
 
     public static void encrypt(String sentence) {
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
-        int multiInverse = multiplicativeInverse(firstKey, secondKey);
-        ArrayList<Integer> PParameters = getPParameters(firstKey, secondKey, sentence, multiInverse);
+        int multiInverse = multiplicativeInverse(firstKey);
+        ArrayList<Integer> PParameters = getPParameters(secondKey, sentence, multiInverse);
+        StringBuilder decryptSentence = decryptOrEncrypt(PParameters);
+        System.out.println("Encrypted sentence: " + decryptSentence);
     }
 
 
-    private static ArrayList<Integer> getPParameters(int firstKey, int secondKey, String sentence, int multiInverse) {
+    private static ArrayList<Integer> getPParameters(int secondKey, String sentence, int multiInverse) {
         HashMap<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
         ArrayList<Integer> decryptedNumbers = new ArrayList<>();
 
         char[] sentenceCharacters = sentence.replaceAll("\\W","").toCharArray();
         for (char character : sentenceCharacters) {
-            int cParameter = (firstKey * lettersAndNumbers.get("" + character) + secondKey) % alphabetLength;
+            int cParameter = (((multiInverse * (lettersAndNumbers.get("" + character) - secondKey)) % alphabetLength) + alphabetLength) % alphabetLength;
             decryptedNumbers.add(cParameter);
         }
+        System.out.println(decryptedNumbers);
         return decryptedNumbers;
 
     }
 
 
-    public static int multiplicativeInverse(int firstKey, int secondKey) {
-        firstKey = firstKey % secondKey;
-        for (int x = 1; x < secondKey; x++)
-            if ((firstKey * x) % secondKey == 1)
+    public static int multiplicativeInverse(int firstKey) {
+        firstKey = firstKey % alphabetLength;
+        for (int x = 1; x < alphabetLength; x++)
+            if ((firstKey * x) % alphabetLength == 1)
                 return x;
         return 1;
     }
 
 
 
-    private static StringBuilder decrypt(ArrayList<Integer> cParameters) {
+    private static StringBuilder decryptOrEncrypt(ArrayList<Integer> cParameters) {
         Map<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
         StringBuilder decryptedString = new StringBuilder();
 
