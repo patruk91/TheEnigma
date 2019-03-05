@@ -12,20 +12,14 @@ public class Enigma {
             if (args.length < 2){
                 System.out.println("Options '-e' or '-d' required additional parameter: name of cipher");
             } else {
-                Scanner reader = new Scanner(System.in);
-                String userInput = "";
+                String userSentenceToProcess = "";
                 if (checkIfInCiphers(args[1])) {
-                    boolean isAnswerCorrect = false;
-                    while(!isAnswerCorrect) {
-                        System.out.println("Please sentence to encrypt or decrypt: ");
-                        userInput = reader.nextLine();
-                        isAnswerCorrect = validateInput(userInput);
-                    }
+                    userSentenceToProcess = getSentenceFromUser();
                     if (args.length == 3) {
-                        CipherData cipherData = new CipherData(args[0], args[1], args[2], userInput);
+                        CipherData cipherData = new CipherData(args[0], args[1], args[2], userSentenceToProcess);
                         HandleCipher.decideMethodToCryptograph(cipherData);
                     } else {
-                        CipherData cipherData = new CipherData(args[0], args[1], userInput);
+                        CipherData cipherData = new CipherData(args[0], args[1], userSentenceToProcess);
                         HandleCipher.decideMethodToCryptograph(cipherData);
 
                     }
@@ -44,8 +38,8 @@ public class Enigma {
         }
     }
 
-    private static boolean validateInput(String userInput) {
-        return !userInput.isEmpty();
+    private static boolean validateInput(String userSentenceToProcess) {
+        return !userSentenceToProcess.isEmpty();
     }
 
     private static boolean checkIfInCiphers(String cipherName) {
@@ -65,6 +59,16 @@ public class Enigma {
         System.out.println("KEY: Optional key to be use with the cipher");
     }
 
-
+    private static String getSentenceFromUser() {
+        Scanner reader = new Scanner(System.in);
+        String userSentenceToProcess = "";
+        boolean isAnswerCorrect = false;
+            while(!isAnswerCorrect) {
+                System.out.println("Please sentence to encrypt or decrypt: ");
+                userSentenceToProcess = reader.nextLine();
+                isAnswerCorrect = validateInput(userSentenceToProcess);
+            }
+        return userSentenceToProcess;
+    }
 
 }
