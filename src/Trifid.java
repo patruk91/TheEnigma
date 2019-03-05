@@ -7,9 +7,7 @@ public class Trifid {
     }
 
     public static void encrypt(String sentence) {
-//        System.out.println(getNumbersFromSentence(sentence));
-        System.out.println(encryptNumbers(5, sentence));
-//        System.out.println("Encrypted sentence: " + decryptSentence(5, sentence));
+        System.out.println("Encrypted sentence: " + encryptSentence(5, sentence));
     }
 
     private static HashMap<String, Integer> createAlgorithmBy3Squares() {
@@ -119,4 +117,19 @@ public class Trifid {
         return encryptNumbers;
     }
 
+
+    private static StringBuilder encryptSentence(int period, String sentence) {
+        Map<String, Integer> squaresCipher = createAlgorithmBy3Squares();
+        List<Integer> encryptNumbers = encryptNumbers(period, sentence);
+        StringBuilder encryptSentence = new StringBuilder();
+
+        for (int number : encryptNumbers) {
+            for (Map.Entry<String, Integer> entry : squaresCipher.entrySet()) {
+                if(number == entry.getValue()) {
+                    encryptSentence.append(entry.getKey());
+                }
+            }
+        }
+        return encryptSentence;
+    }
 }
