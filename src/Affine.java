@@ -21,7 +21,6 @@ public class Affine {
         System.out.println("Encrypted sentence: " + decryptSentence);
     }
 
-
     private static ArrayList<Integer> getPParameters(int secondKey, String sentence, int multiInverse) {
         HashMap<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
         ArrayList<Integer> decryptedNumbers = new ArrayList<>();
@@ -31,21 +30,17 @@ public class Affine {
             int cParameter = (((multiInverse * (lettersAndNumbers.get("" + character) - secondKey)) % alphabetLength) + alphabetLength) % alphabetLength;
             decryptedNumbers.add(cParameter);
         }
-        System.out.println(decryptedNumbers);
         return decryptedNumbers;
 
     }
 
-
-    public static int multiplicativeInverse(int firstKey) {
+    private static int multiplicativeInverse(int firstKey) {
         firstKey = firstKey % alphabetLength;
         for (int x = 1; x < alphabetLength; x++)
             if ((firstKey * x) % alphabetLength == 1)
                 return x;
         return 1;
     }
-
-
 
     private static StringBuilder decryptOrEncrypt(ArrayList<Integer> cParameters) {
         Map<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
@@ -108,6 +103,7 @@ public class Affine {
         }
         return firstKey;
     }
+
     private static int getSecondKey() {
         ArrayList<Integer> functionParameterB = createListParametersB();
         System.out.print("Second key need to be between: 0 - " + (alphabetLength - 1) + "\n");
@@ -129,8 +125,6 @@ public class Affine {
         }
         return secondKey;
     }
-
-
 
     private static ArrayList<Integer> createListParametersA() {
         ArrayList<Integer> parametersA = new ArrayList<>();
@@ -159,7 +153,6 @@ public class Affine {
         return parametersB;
     }
 
-
     private static ArrayList<Integer> findAllDivisors() {
         ArrayList<Integer> divisors = new ArrayList<>();
         for (int i = 2; i <= alphabetLength; i++)
@@ -172,8 +165,4 @@ public class Affine {
     private static boolean isNumeric(String number) {
         return number != null && number.matches("[-+]?\\d*\\.?\\d+");
     }
-
-
-
-
 }
