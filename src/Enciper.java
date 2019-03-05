@@ -19,7 +19,7 @@ public class Enciper {
                 break;
 
             case "Trifid":
-                // Trifid.encrypt(cipherData.getSentence());
+                 Trifid.encrypt(cipherData.getSentence());
                 break;
 
             case "Vigenere":

@@ -1,14 +1,13 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class Trifid {
 
     public static void decrypt(String sentence) {
-//        System.out.println(createAlgorithmBy3Squares());
-//        System.out.println(getNumbersFromSentence(sentence));
-        System.out.println(getDeryptedNumbers(5, sentence));
+        System.out.println("Decrypted sentence: " + decryptSentence(5, sentence));
+    }
+
+    public static void encrypt(String sentence) {
+        System.out.println("Decrypted sentence: " + decryptSentence(5, sentence));
     }
 
     private static HashMap<String, Integer> createAlgorithmBy3Squares() {
@@ -45,9 +44,9 @@ public class Trifid {
         return getNumbersFromSentence;
     }
 
-    private static ArrayList<String> getDeryptedNumbers(int period, String sentence) {
+    private static ArrayList<Integer> getDecryptedNumbers(int period, String sentence) {
         ArrayList<String> getNumbersFromSentence = getNumbersFromSentence(sentence);
-        ArrayList<String> getDecryptedNumbers = new ArrayList<>();
+        ArrayList<Integer> getDecryptedNumbers = new ArrayList<>();
 
         for (int from = 0; from <= getNumbersFromSentence.size(); from+=5) {
             List<String> subListGetDecryptedNumbers = getNumbersFromSentence.subList(from, period);
@@ -67,7 +66,7 @@ public class Trifid {
                     ii++;
 
                     if (result.length() == 3){
-                        getDecryptedNumbers.add(result);
+                        getDecryptedNumbers.add(Integer.parseInt(result));
                         result = "";
                     }
                 }
@@ -78,7 +77,19 @@ public class Trifid {
         return getDecryptedNumbers;
     }
 
+    private static StringBuilder decryptSentence(int period, String sentence) {
+        Map<String, Integer> squaresCipher = createAlgorithmBy3Squares();
+        List<Integer> getDecryptedNumbers = getDecryptedNumbers(period, sentence);
+        StringBuilder decryptSentence = new StringBuilder();
 
-
+        for (int number : getDecryptedNumbers) {
+            for (Map.Entry<String, Integer> entry : squaresCipher.entrySet()) {
+                if(number == entry.getValue()) {
+                    decryptSentence.append(entry.getKey());
+                }
+            }
+        }
+        return decryptSentence;
+    }
 
 }
