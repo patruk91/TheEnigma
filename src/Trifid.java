@@ -10,8 +10,8 @@ public class Trifid {
         System.out.println("Encrypted sentence: " + encryptSentence(5, sentence));
     }
 
-    private static HashMap<String, Integer> createAlgorithmBy3Squares() {
-        HashMap<String, Integer> squaresCipher = new HashMap<>();
+    private static HashMap<String, Integer> calculateTrigrams() {
+        HashMap<String, Integer> alphabetNumberTrigrams = new HashMap<>();
         char[] value = "EPSDUCVWYM.ZLKXNBTFGORIJHAQ".toCharArray();
 
         int numberOfSquares = 3;
@@ -22,23 +22,23 @@ public class Trifid {
             for (int rows = 1; rows <= numberOfRows; rows++) {
                 for (int columns = 1; columns <= numberOfColumns; columns++) {
                     int keyToPut = Integer.parseInt("" + square + rows + columns);
-                    squaresCipher.put("" + value[i], keyToPut);
+                    alphabetNumberTrigrams.put("" + value[i], keyToPut);
                     i++;
                 }
             }
         }
-        return squaresCipher;
+        return alphabetNumberTrigrams;
     }
 
     private static ArrayList<String> getNumbersFromSentence(String sentence) {
-        HashMap<String, Integer> squaresCipher = createAlgorithmBy3Squares();
+        HashMap<String, Integer> alphabetNumberTrigrams = calculateTrigrams();
         ArrayList<String> getNumbersFromSentence = new ArrayList<>();
         System.out.println(sentence);
         char[] sentenceCharacters = sentence.replaceAll("\\s", "").toCharArray();
         System.out.println(sentenceCharacters);
 
         for (char character : sentenceCharacters) {
-            getNumbersFromSentence.add(squaresCipher.get("" + character) + "");
+            getNumbersFromSentence.add(alphabetNumberTrigrams.get("" + character) + "");
         }
 
         return getNumbersFromSentence;
@@ -47,12 +47,19 @@ public class Trifid {
     private static ArrayList<Integer> getDecryptedNumbers(int period, String sentence) {
         ArrayList<String> getNumbersFromSentence = getNumbersFromSentence(sentence);
         ArrayList<Integer> getDecryptedNumbers = new ArrayList<>();
+        int numberOfLoops = getNumbersFromSentence.size() / period;
+        int startSubstring = 0;
+        int endSubstring = period;
+        Integer[] dupa;
 
-        for (int from = 0; from <= getNumbersFromSentence.size(); from+=5) {
-            List<String> subListGetDecryptedNumbers = getNumbersFromSentence.subList(from, period);
-            period += 5;
-            if (period > getNumbersFromSentence.size()) {
-                period = getNumbersFromSentence.size();
+        for (int ij = 0; ij <= numberOfLoops; ij++) {
+            List<String> subListGetDecryptedNumbers = getNumbersFromSentence.subList(startSubstring, endSubstring);
+            int sizeOfSubList = subListGetDecryptedNumbers.size();
+
+            startSubstring += sizeOfSubList;
+            endSubstring += sizeOfSubList;
+            if (endSubstring > getNumbersFromSentence.size()) {
+                endSubstring = getNumbersFromSentence.size();
             }
 //            System.out.println(subListGetDecryptedNumbers.toString());
             int iterator = 0;
@@ -78,12 +85,12 @@ public class Trifid {
     }
 
     private static StringBuilder decryptSentence(int period, String sentence) {
-        Map<String, Integer> squaresCipher = createAlgorithmBy3Squares();
+        Map<String, Integer> alphabetNumberTrigrams = calculateTrigrams();
         List<Integer> getDecryptedNumbers = getDecryptedNumbers(period, sentence);
         StringBuilder decryptSentence = new StringBuilder();
 
         for (int number : getDecryptedNumbers) {
-            for (Map.Entry<String, Integer> entry : squaresCipher.entrySet()) {
+            for (Map.Entry<String, Integer> entry : alphabetNumberTrigrams.entrySet()) {
                 if(number == entry.getValue()) {
                     decryptSentence.append(entry.getKey());
                 }
@@ -119,12 +126,12 @@ public class Trifid {
 
 
     private static StringBuilder encryptSentence(int period, String sentence) {
-        Map<String, Integer> squaresCipher = createAlgorithmBy3Squares();
+        Map<String, Integer> alphabetNumberTrigrams = calculateTrigrams();
         List<Integer> encryptNumbers = encryptNumbers(period, sentence);
         StringBuilder encryptSentence = new StringBuilder();
 
         for (int number : encryptNumbers) {
-            for (Map.Entry<String, Integer> entry : squaresCipher.entrySet()) {
+            for (Map.Entry<String, Integer> entry : alphabetNumberTrigrams.entrySet()) {
                 if(number == entry.getValue()) {
                     encryptSentence.append(entry.getKey());
                 }
