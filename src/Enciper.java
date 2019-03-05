@@ -24,7 +24,7 @@ public class Enciper {
                 break;
 
             case "Vigenere":
-                // Vigenere.encrypt(cipherData);
+                Vigenere.encrypt(cipherData);
                 break;
         }
     }

@@ -24,7 +24,7 @@ public class Decipher {
                 break;
 
             case "Vigenere":
-                // Vigenere.decrypt(cipherData);
+                Vigenere.decrypt(cipherData);
                 break;
         }
     }
