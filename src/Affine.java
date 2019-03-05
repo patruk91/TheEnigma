@@ -27,7 +27,8 @@ public class Affine {
 
         char[] sentenceCharacters = sentence.replaceAll("\\W","").toCharArray();
         for (char character : sentenceCharacters) {
-            int cParameter = (((multiInverse * (lettersAndNumbers.get("" + character) - secondKey)) % alphabetLength) + alphabetLength) % alphabetLength;
+            int cParameter = (((multiInverse * (lettersAndNumbers.get("" + character)
+                    - secondKey)) % alphabetLength) + alphabetLength) % alphabetLength;
             decryptedNumbers.add(cParameter);
         }
         return decryptedNumbers;
