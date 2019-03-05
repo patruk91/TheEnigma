@@ -63,19 +63,16 @@ public class Trifid {
                 int ii = 0;
                 while (ii < subListGetDecryptedNumbers.size()) {
                     char[] charNumber = subListGetDecryptedNumbers.get(ii).toCharArray();
-                    if (result.length() != 3) {
-                        result += charNumber[iterator];
-                        ii++;
-                    }
+                    result += charNumber[iterator];
+                    ii++;
+
                     if (result.length() == 3){
                         getDecryptedNumbers.add(result);
                         result = "";
                     }
                 }
                 iterator += 1;
-//                if (result.length() == 3) {
-//                    getDecryptedNumbers.add(result);
-//                }
+
             }
         }
         return getDecryptedNumbers;
