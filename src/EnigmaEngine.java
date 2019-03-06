@@ -76,7 +76,7 @@ public class EnigmaEngine {
         System.out.println("KEY: Optional key to be use with the cipher");
     }
 
-    private static String getSentenceFromUser() {
+    public static String getSentenceFromUser() {
         Scanner reader = new Scanner(System.in);
         String userSentenceToProcess = "";
         boolean isAnswerCorrect = false;

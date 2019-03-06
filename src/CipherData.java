@@ -1,3 +1,7 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class CipherData {
     private String option;
     private String cipherName;
@@ -32,7 +36,7 @@ public class CipherData {
     }
 
     public String getSentence() {
-        return sentence;
+        return this.sentence = askForCorrectSentence(sentence);
     }
 
     public void setKey(String key) {
@@ -41,6 +45,42 @@ public class CipherData {
 
     public void setSentence(String sentence) {
         this.sentence = sentence;
+    }
+
+    private List<String> createAlphabet() {
+        int alphabetLength = 26;
+        List<String> alphabet = new ArrayList<>();
+        for (int i = 0; i < alphabetLength; i++) {
+            String alphabetLetter = Character.toString(97 + i);
+            alphabet.add(alphabetLetter);
+        }
+        if (getCipherName().equals("Trifid")) {
+            alphabet.add(".");
+        }
+        return alphabet;
+    }
+
+    private boolean isInAlphabet(String sentence) {
+        List<String> alphabet = createAlphabet();
+        char[] charOfSentence = sentence.toCharArray();
+        for (char character : charOfSentence) {
+            if (!alphabet.contains(character+"")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private String askForCorrectSentence(String sentence) {
+        List<String> alphabet = createAlphabet();
+
+        while (!isInAlphabet(sentence.toLowerCase())) {
+            String delimiter = ",";
+            String alphabetAsCharacters = String.join(delimiter, Arrays.asList(alphabet.toString()));
+            System.out.print("Letters in sentence need to be in following characters: " + alphabetAsCharacters + "\n");
+            sentence = EnigmaEngine.getSentenceFromUser();
+        }
+        return sentence.toLowerCase();
     }
 
     public void prepareSentence() {

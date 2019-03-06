@@ -20,7 +20,7 @@ public class Decipher {
                 break;
 
             case "Trifid":
-                // Trifid.decrypt(cipherData.getSentence());
+                 Trifid.decrypt(cipherData.getSentence());
                 break;
 
             case "Vigenere":
