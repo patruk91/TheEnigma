@@ -74,14 +74,34 @@ public class CipherData {
     private String askForCorrectSentence(String sentence) {
         List<String> alphabet = createAlphabet();
 
-
         while (!isInAlphabet(sentence.toLowerCase())) {
-
             String delimiter = ",";
             String alphabetAsCharacters = String.join(delimiter, Arrays.asList(alphabet.toString()));
             System.out.print("Letters in sentence need to be in following characters: " + alphabetAsCharacters + "\n");
             sentence = EnigmaEngine.getSentenceFromUser();
         }
         return sentence.toLowerCase();
+    }
+
+    public void prepareSentence() {
+        if (this.cipherName.equals("Trifid")) {
+            this.sentence = this.sentence.toUpperCase().replaceAll("[^a-zA-Z]+", "");
+        }
+        else {
+            this.sentence = this.sentence.toUpperCase().replaceAll("[^a-zA-Z]+", "");
+        }
+    }
+
+    public void prepareKeyForVigenere() {
+        int keyLength = this.key.length();
+        int sentenceLength = this.sentence.length();
+        if (keyLength > sentenceLength) {
+            this.key = (this.key.substring(0, sentenceLength)).toUpperCase();
+        }
+        else {
+            int multiplying = sentenceLength / keyLength;
+            int remainder = sentenceLength % keyLength;
+            this.key = (this.key.repeat(multiplying) + this.key.substring(0, remainder)).toUpperCase();
+        }
     }
 }

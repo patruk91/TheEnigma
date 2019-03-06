@@ -13,6 +13,13 @@ public class EnigmaEngine {
         boolean result = false;
         if (args.length < 1 || args[0].equals("--help")) {
             handleHelpMenu();
+        } else if (args[1].equals("Caesar") || args[1].equals("Vigenere")) {
+            if (args.length > 2) {
+                result = true;
+            } else {
+                System.out.println("Enter KEY after name of cipher");
+                result = false;
+            };
         } else if (args[0].equals("-l")) {
             nameOfCiphers();
         } else if (args[0].equals("-e") || args[0].equals("-d")) {

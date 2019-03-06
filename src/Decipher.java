@@ -8,7 +8,7 @@ public class Decipher {
                 break;
 
             case "Caesar":
-                // Caesar.decrypt(cipherData.getSentence());
+                Caesar.decrypt(cipherData);
                 break;
 
             case "ROT13":
