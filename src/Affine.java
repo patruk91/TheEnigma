@@ -5,7 +5,6 @@ public class Affine {
     private static Scanner reader = new Scanner(System.in);
 
     public static void encrypt(String sentence) {
-        sentence = sentence.toLowerCase();
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
         ArrayList<Integer> cParameters = getCParameters(firstKey, secondKey, sentence);
@@ -14,7 +13,6 @@ public class Affine {
     }
 
     public static void decrypt(String sentence) {
-        sentence = sentence.toLowerCase();
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
         int multiInverse = multiplicativeInverse(firstKey);
@@ -27,7 +25,7 @@ public class Affine {
         Map<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
         ArrayList<Integer> decryptedNumbers = new ArrayList<>();
 
-        char[] sentenceCharacters = sentence.replaceAll("\\W","").toCharArray();
+        char[] sentenceCharacters = sentence.replaceAll("\\W", "").toCharArray();
         for (char character : sentenceCharacters) {
             int cParameter = (((multiInverse * (lettersAndNumbers.get("" + character)
                     - secondKey)) % alphabetLength) + alphabetLength) % alphabetLength;
@@ -51,7 +49,7 @@ public class Affine {
 
         for (int number : cParameters) {
             for (Map.Entry<String, Integer> entry : lettersAndNumbers.entrySet()) {
-                if(number == entry.getValue()) {
+                if (number == entry.getValue()) {
                     decryptedString.append(entry.getKey());
                 }
             }
@@ -72,7 +70,7 @@ public class Affine {
         Map<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
         ArrayList<Integer> decryptedNumbers = new ArrayList<>();
 
-        char[] sentenceCharacters = sentence.replaceAll("\\W","").toCharArray();
+        char[] sentenceCharacters = sentence.replaceAll("\\W", "").toCharArray();
         for (char character : sentenceCharacters) {
             int cParameter = (firstKey * lettersAndNumbers.get("" + character) + secondKey) % alphabetLength;
             decryptedNumbers.add(cParameter);
@@ -85,7 +83,7 @@ public class Affine {
         List<Integer> availableParametersA = createListParametersA();
 
         String delimiter = ",";
-        System.out.print("First key need to be in values:" );
+        System.out.print("First key need to be in values:");
         String ParametersA = String.join(delimiter, Arrays.asList(availableParametersA.toString()));
         System.out.println(ParametersA);
 
@@ -159,7 +157,7 @@ public class Affine {
     private static List<Integer> findAllDivisors() {
         List<Integer> divisors = new ArrayList<>();
         for (int i = 2; i <= alphabetLength; i++)
-            if (alphabetLength % i==0) {
+            if (alphabetLength % i == 0) {
                 divisors.add(i);
             }
         return divisors;
