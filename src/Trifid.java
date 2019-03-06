@@ -4,7 +4,7 @@ public class Trifid {
 
     public static void decrypt(String sentence) {
         sentence = sentence.toUpperCase();
-        if (isInAlphabet(sentence)) {
+        if (!isInAlphabet(sentence)) {
             sentence = askForCorrectSentence(sentence);
         }
 
@@ -14,7 +14,7 @@ public class Trifid {
 
     public static void encrypt(String sentence) {
         sentence = sentence.toUpperCase();
-        if (isInAlphabet(sentence)) {
+        if (!isInAlphabet(sentence)) {
             sentence = askForCorrectSentence(sentence);
         }
 
@@ -194,7 +194,7 @@ public class Trifid {
             alphabet.add(alphabetLetter);
         }
             alphabet.add(".");
-            alphabet.add(".");
+            alphabet.add(" ");
 
         return alphabet;
     }
@@ -219,6 +219,6 @@ public class Trifid {
             System.out.print("Letters in sentence need to be in following characters: " + alphabetAsCharacters + "\n");
             sentence = EnigmaEngine.getSentenceFromUser();
         }
-        return sentence.toLowerCase();
+        return sentence.toUpperCase();
     }
 }
