@@ -3,12 +3,13 @@ import java.util.*;
 public class Trifid {
 
     public static void decrypt(String sentence) {
-        System.out.println("Decrypted sentence: " + decryptSentence(5, sentence));
+        int period = getPeriodFromUser();
+        System.out.println("Decrypted sentence: " + decryptSentence(period, sentence));
     }
 
     public static void encrypt(String sentence) {
-        System.out.println(encryptSentenceToNumbers(5, sentence));
-        System.out.println("Encrypted sentence: " + encryptSentence(5, sentence));
+        int period = getPeriodFromUser();
+        System.out.println("Encrypted sentence: " + encryptSentence(period, sentence));
     }
 
     private static HashMap<String, Integer> calculateTrigrams() {
@@ -52,40 +53,42 @@ public class Trifid {
         int endOfSublist = 0;
         int[] getIntervals = getIntervals(lengthOfEncryptWord ,period);
         for (int interval = 0; interval < getIntervals.length; interval++) {
-            List<String> sublistEncryptedNumbers = getNumbersFromAlphabet.subList(startSubstring, endOfSublist+=getIntervals[interval]);
+            List<String> sublistEncryptedNumbers = getNumbersFromAlphabet.subList(
+                    startSubstring, endOfSublist+=getIntervals[interval]);
             startSubstring += getIntervals[interval];
 
-            int iterator = 0;
-            String result = "";
-            for (int i = 0; i < 3; i++) {
 
-                int ii = 0;
-                while (ii < sublistEncryptedNumbers.size()) {
-                    char[] charNumber = sublistEncryptedNumbers.get(ii).toCharArray();
-                    result += charNumber[iterator];
-                    ii++;
+            int actualSublist = 0;
+            String encryptNumber = "";
+            int lengthOfNumber = 3;
+            for (int number = 0; number < lengthOfNumber; number++) {
 
-                    if (result.length() == 3){
-                        encryptSentenceToNumbers.add(Integer.parseInt(result));
-                        result = "";
+                int elementFromSublist = 0;
+                while (elementFromSublist < sublistEncryptedNumbers.size()) {
+                    char[] charNumber = sublistEncryptedNumbers.get(elementFromSublist).toCharArray();
+                    encryptNumber += charNumber[actualSublist];
+                    elementFromSublist++;
+
+                    if (encryptNumber.length() == 3){
+                        encryptSentenceToNumbers.add(Integer.parseInt(encryptNumber));
+                        encryptNumber = "";
                     }
                 }
-                iterator += 1;
-
+                actualSublist += 1;
             }
         }
         return encryptSentenceToNumbers;
     }
 
-    private static int[] getIntervals(int lengthOfEncryptWord, int period) {
-        int encryptIntervals = (int)Math.ceil(lengthOfEncryptWord / (double)period);
+    private static int[] getIntervals(int lengthOfSentence, int period) {
+        int intervals = (int)Math.ceil(lengthOfSentence / (double)period);
 
-        int[] getIntervals = new int[encryptIntervals];
+        int[] getIntervals = new int[intervals];
         for (int num = 0; num < getIntervals.length; num++) {
             if (num != getIntervals.length-1) {
                 getIntervals[num] = period;
             } else {
-                getIntervals[num] = lengthOfEncryptWord % period;
+                getIntervals[num] = lengthOfSentence % period;
             }
         }
         return getIntervals;
@@ -93,40 +96,43 @@ public class Trifid {
 
     private static StringBuilder encryptSentence(int period, String sentence) {
         Map<String, Integer> alphabetNumberTrigrams = calculateTrigrams();
-        List<Integer> encryptSentenceToNumbers = encryptSentenceToNumbers(period, sentence);
-        StringBuilder decryptSentence = new StringBuilder();
+        List<Integer> encryptNumbers = encryptSentenceToNumbers(period, sentence);
+        StringBuilder encryptSentence = new StringBuilder();
 
-        for (int number : encryptSentenceToNumbers) {
+        for (int number : encryptNumbers) {
             for (Map.Entry<String, Integer> entry : alphabetNumberTrigrams.entrySet()) {
                 if(number == entry.getValue()) {
-                    decryptSentence.append(entry.getKey());
+                    encryptSentence.append(entry.getKey());
                 }
             }
         }
-        return decryptSentence;
+        return encryptSentence;
     }
 
     private static ArrayList<Integer> decryptNumbers(int period, String sentence) {
         ArrayList<String> getNumbersFromAlphabet = getNumbersFromAlphabet(sentence);
         ArrayList<Integer> decryptNumbers = new ArrayList<>();
+        int lengthOfDecryptWord = getNumbersFromAlphabet.size();
+        //without whitespaces
 
-        for (int from = 0; from <= getNumbersFromAlphabet.size(); from+=5) {
-            List<String> sublistEncryptedNumbers = getNumbersFromAlphabet.subList(from, period);
-            period += 5;
-            if (period > getNumbersFromAlphabet.size()) {
-                period = getNumbersFromAlphabet.size();
-            }
+        int startSubstring = 0;
+        int endOfSublist = 0;
+        int[] getIntervals = getIntervals(lengthOfDecryptWord ,period);
 
-            System.out.println(sublistEncryptedNumbers);
-            char[] result = String.join("", sublistEncryptedNumbers).toCharArray();
-            int i = 0;
-            int sizeOfArr = sublistEncryptedNumbers.size();
-            while (i != sublistEncryptedNumbers.size()){
-                String value = "" +  result[i] + result[sizeOfArr + i] + result[sizeOfArr * 2 + i];
+        for (int interval = 0; interval < getIntervals.length; interval++) {
+            List<String> sublistDecryptedNumbers = getNumbersFromAlphabet.subList(
+                    startSubstring, endOfSublist+=getIntervals[interval]);
+            startSubstring += getIntervals[interval];
+
+            char[] result = String.join("", sublistDecryptedNumbers).toCharArray();
+            int i = 0; //element of sublist
+            int sizeOfSublist = sublistDecryptedNumbers.size();
+
+            while (i != sizeOfSublist){
+                String value = "" +  result[i] + result[sizeOfSublist + i] + result[sizeOfSublist * 2 + i];
                 decryptNumbers.add(Integer.parseInt(value));
                 i++;
             }
-
         }
         return decryptNumbers;
     }
@@ -145,5 +151,27 @@ public class Trifid {
             }
         }
         return decryptSentence;
+    }
+
+
+    private static int getPeriodFromUser() {
+        Scanner reader = new Scanner(System.in);
+
+        String userInput;
+        int secondKey = 0;
+        boolean correctKey = false;
+
+        while (!correctKey) {
+            System.out.print("Please provide period to encode/decode sentence (range between: 5 - 20): ");
+            userInput = reader.nextLine();
+
+            if (Affine.isNumeric(userInput)) {
+                secondKey = Integer.parseInt(userInput);
+                if (5 <= secondKey && secondKey <= 20) {
+                    correctKey = true;
+                }
+            }
+        }
+        return secondKey;
     }
 }
