@@ -15,7 +15,15 @@ public class EnigmaEngine {
             handleHelpMenu();
         } else if (args[1].equals("Caesar") || args[1].equals("Vigenere")) {
             if (args.length > 2) {
-                result = true;
+                if (args[1].equals("Vigenere") && checkIfContainDigits(args[2])) {
+                    result = true;
+                }
+                else if (args[1].equals("Vigenere") && !checkIfContainDigits(args[2])){
+                    System.out.println("Kye for Vigenere cipher can contain only ketters.");
+                    result = false;
+                } else {
+                    result = true;
+                }
             } else {
                 System.out.println("Enter KEY after name of cipher");
                 result = false;
@@ -86,6 +94,14 @@ public class EnigmaEngine {
                 isAnswerCorrect = validateInput(userSentenceToProcess);
             }
         return userSentenceToProcess;
+    }
+
+    private static boolean checkIfContainDigits(String key) {
+        boolean result = false;
+        if (key.matches("[a-zA-Z]+")) {
+            result = true;
+        }
+        return result;
     }
 
 }
