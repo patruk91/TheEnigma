@@ -4,7 +4,8 @@ public class Affine {
     private static int alphabetLength = 26;
     private static Scanner reader = new Scanner(System.in);
 
-    public static void decrypt(String sentence) {
+    public static void encrypt(String sentence) {
+        sentence = sentence.toLowerCase();
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
         ArrayList<Integer> cParameters = getCParameters(firstKey, secondKey, sentence);
@@ -12,7 +13,8 @@ public class Affine {
         System.out.println("Decrypted sentence: " + decryptSentence);
     }
 
-    public static void encrypt(String sentence) {
+    public static void decrypt(String sentence) {
+        sentence = sentence.toLowerCase();
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
         int multiInverse = multiplicativeInverse(firstKey);
@@ -22,12 +24,13 @@ public class Affine {
     }
 
     private static ArrayList<Integer> getPParameters(int secondKey, String sentence, int multiInverse) {
-        HashMap<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
+        Map<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
         ArrayList<Integer> decryptedNumbers = new ArrayList<>();
 
         char[] sentenceCharacters = sentence.replaceAll("\\W","").toCharArray();
         for (char character : sentenceCharacters) {
-            int cParameter = (((multiInverse * (lettersAndNumbers.get("" + character) - secondKey)) % alphabetLength) + alphabetLength) % alphabetLength;
+            int cParameter = (((multiInverse * (lettersAndNumbers.get("" + character)
+                    - secondKey)) % alphabetLength) + alphabetLength) % alphabetLength;
             decryptedNumbers.add(cParameter);
         }
         return decryptedNumbers;
@@ -56,8 +59,8 @@ public class Affine {
         return decryptedString;
     }
 
-    private static HashMap<String, Integer> convertAlphabetToNumbers() {
-        HashMap<String, Integer> lettersAndNumbers = new HashMap<>();
+    private static Map<String, Integer> convertAlphabetToNumbers() {
+        Map<String, Integer> lettersAndNumbers = new HashMap<>();
         for (int i = 0; i < alphabetLength; i++) {
             String alphabetLetter = Character.toString(97 + i);
             lettersAndNumbers.put(alphabetLetter, i);
@@ -66,7 +69,7 @@ public class Affine {
     }
 
     private static ArrayList<Integer> getCParameters(int firstKey, int secondKey, String sentence) {
-        HashMap<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
+        Map<String, Integer> lettersAndNumbers = convertAlphabetToNumbers();
         ArrayList<Integer> decryptedNumbers = new ArrayList<>();
 
         char[] sentenceCharacters = sentence.replaceAll("\\W","").toCharArray();
@@ -79,25 +82,25 @@ public class Affine {
     }
 
     private static int getFirstKey() {
-        ArrayList<Integer> functionParameterA = createListParametersA();
+        List<Integer> availableParametersA = createListParametersA();
 
         String delimiter = ",";
         System.out.print("First key need to be in values:" );
-        String result = String.join(delimiter, Arrays.asList(functionParameterA.toString()));
-        System.out.println(result);
+        String ParametersA = String.join(delimiter, Arrays.asList(availableParametersA.toString()));
+        System.out.println(ParametersA);
 
         String userInput;
         int firstKey = 0;
-        boolean keyInFunction = false;
+        boolean keyInAvailableParameters = false;
 
-        while (!keyInFunction) {
+        while (!keyInAvailableParameters) {
             System.out.print("Please provide first key to encrypt: ");
             userInput = reader.nextLine();
 
             if (isNumeric(userInput)) {
                 firstKey = Integer.parseInt(userInput);
-                if (functionParameterA.contains(firstKey)) {
-                    keyInFunction = true;
+                if (availableParametersA.contains(firstKey)) {
+                    keyInAvailableParameters = true;
                 }
             }
         }
@@ -105,30 +108,30 @@ public class Affine {
     }
 
     private static int getSecondKey() {
-        ArrayList<Integer> functionParameterB = createListParametersB();
+        List<Integer> availableParametersB = createListParametersB();
         System.out.print("Second key need to be between: 0 - " + (alphabetLength - 1) + "\n");
 
         String userInput;
         int secondKey = 0;
-        boolean keyInFunction = false;
+        boolean keyInAvailableParameters = false;
 
-        while (!keyInFunction) {
+        while (!keyInAvailableParameters) {
             System.out.print("Please provide first key to encrypt: ");
             userInput = reader.nextLine();
 
             if (isNumeric(userInput)) {
                 secondKey = Integer.parseInt(userInput);
-                if (functionParameterB.contains(secondKey)) {
-                    keyInFunction = true;
+                if (availableParametersB.contains(secondKey)) {
+                    keyInAvailableParameters = true;
                 }
             }
         }
         return secondKey;
     }
 
-    private static ArrayList<Integer> createListParametersA() {
-        ArrayList<Integer> parametersA = new ArrayList<>();
-        ArrayList<Integer> divisors = findAllDivisors();
+    private static List<Integer> createListParametersA() {
+        List<Integer> parametersA = new ArrayList<>();
+        List<Integer> divisors = findAllDivisors();
 
         for (int number = 1; number < alphabetLength; number++) {
             int count = 0;
@@ -144,8 +147,8 @@ public class Affine {
         return parametersA;
     }
 
-    private static ArrayList<Integer> createListParametersB() {
-        ArrayList<Integer> parametersB = new ArrayList<>();
+    private static List<Integer> createListParametersB() {
+        List<Integer> parametersB = new ArrayList<>();
 
         for (int number = 0; number < alphabetLength; number++) {
             parametersB.add(number);
@@ -153,8 +156,8 @@ public class Affine {
         return parametersB;
     }
 
-    private static ArrayList<Integer> findAllDivisors() {
-        ArrayList<Integer> divisors = new ArrayList<>();
+    private static List<Integer> findAllDivisors() {
+        List<Integer> divisors = new ArrayList<>();
         for (int i = 2; i <= alphabetLength; i++)
             if (alphabetLength % i==0) {
                 divisors.add(i);
@@ -162,7 +165,7 @@ public class Affine {
         return divisors;
     }
 
-    private static boolean isNumeric(String number) {
+    public static boolean isNumeric(String number) {
         return number != null && number.matches("[-+]?\\d*\\.?\\d+");
     }
 }
