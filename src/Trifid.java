@@ -3,17 +3,19 @@ import java.util.*;
 public class Trifid {
 
     public static void decrypt(String sentence) {
+        sentence = sentence.toUpperCase();
         int period = getPeriodFromUser();
         System.out.println("Decrypted sentence: " + decryptSentence(period, sentence));
     }
 
     public static void encrypt(String sentence) {
+        sentence = sentence.toUpperCase();
         int period = getPeriodFromUser();
         System.out.println("Encrypted sentence: " + encryptSentence(period, sentence));
     }
 
-    private static HashMap<String, Integer> calculateTrigrams() {
-        HashMap<String, Integer> alphabetNumberTrigrams = new HashMap<>();
+    private static Map<String, Integer> calculateTrigrams() {
+        Map<String, Integer> alphabetNumberTrigrams = new HashMap<>();
         char[] alphabetEncryption = "EPSDUCVWYM.ZLKXNBTFGORIJHAQ".toCharArray();
 
         int numberOfSquares = 3;
@@ -32,8 +34,8 @@ public class Trifid {
         return alphabetNumberTrigrams;
     }
 
-    private static ArrayList<String> getNumbersFromAlphabet(String sentence) {
-        HashMap<String, Integer> alphabetNumberTrigrams = calculateTrigrams();
+    private static List<String> getNumbersFromAlphabet(String sentence) {
+        Map<String, Integer> alphabetNumberTrigrams = calculateTrigrams();
         ArrayList<String> getNumbersFromAlphabet = new ArrayList<>();
         char[] sentenceCharacters = sentence.replaceAll("\\s", "").toCharArray();
 
@@ -43,9 +45,9 @@ public class Trifid {
         return getNumbersFromAlphabet;
     }
 
-    private static ArrayList<Integer> encryptSentenceToNumbers(int period, String sentence) {
-        ArrayList<String> getNumbersFromAlphabet = getNumbersFromAlphabet(sentence);
-        ArrayList<Integer> encryptSentenceToNumbers = new ArrayList<>();
+    private static List<Integer> encryptSentenceToNumbers(int period, String sentence) {
+        List<String> getNumbersFromAlphabet = getNumbersFromAlphabet(sentence);
+        List<Integer> encryptSentenceToNumbers = new ArrayList<>();
         int lengthOfEncryptWord = getNumbersFromAlphabet.size();
         //without whitespaces
 
@@ -109,9 +111,9 @@ public class Trifid {
         return encryptSentence;
     }
 
-    private static ArrayList<Integer> decryptNumbers(int period, String sentence) {
-        ArrayList<String> getNumbersFromAlphabet = getNumbersFromAlphabet(sentence);
-        ArrayList<Integer> decryptNumbers = new ArrayList<>();
+    private static List<Integer> decryptNumbers(int period, String sentence) {
+        List<String> getNumbersFromAlphabet = getNumbersFromAlphabet(sentence);
+        List<Integer> decryptNumbers = new ArrayList<>();
         int lengthOfDecryptWord = getNumbersFromAlphabet.size();
         //without whitespaces
 
