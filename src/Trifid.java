@@ -4,12 +4,20 @@ public class Trifid {
 
     public static void decrypt(String sentence) {
         sentence = sentence.toUpperCase();
+        if (isInAlphabet(sentence)) {
+            sentence = askForCorrectSentence(sentence);
+        }
+
         int period = getPeriodFromUser(sentence);
         System.out.println("Decrypted sentence: " + decryptSentence(period, sentence));
     }
 
     public static void encrypt(String sentence) {
         sentence = sentence.toUpperCase();
+        if (isInAlphabet(sentence)) {
+            sentence = askForCorrectSentence(sentence);
+        }
+
         int period = getPeriodFromUser(sentence);
         System.out.println("Encrypted sentence: " + encryptSentence(period, sentence));
     }
@@ -176,5 +184,41 @@ public class Trifid {
             }
         }
         return secondKey;
+    }
+
+    private static List<String> createAlphabet() {
+        int alphabetLength = 26;
+        List<String> alphabet = new ArrayList<>();
+        for (int i = 0; i < alphabetLength; i++) {
+            String alphabetLetter = Character.toString(97 + i);
+            alphabet.add(alphabetLetter);
+        }
+            alphabet.add(".");
+            alphabet.add(".");
+
+        return alphabet;
+    }
+
+    private static boolean isInAlphabet(String sentence) {
+        List<String> alphabet = createAlphabet();
+        char[] charOfSentence = sentence.toCharArray();
+        for (char character : charOfSentence) {
+            if (!alphabet.contains(character+"")) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static String askForCorrectSentence(String sentence) {
+        List<String> alphabet = createAlphabet();
+
+        while (!isInAlphabet(sentence.toLowerCase())) {
+            String delimiter = ",";
+            String alphabetAsCharacters = String.join(delimiter, Arrays.asList(alphabet.toString()));
+            System.out.print("Letters in sentence need to be in following characters: " + alphabetAsCharacters + "\n");
+            sentence = EnigmaEngine.getSentenceFromUser();
+        }
+        return sentence.toLowerCase();
     }
 }
