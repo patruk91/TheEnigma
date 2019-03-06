@@ -11,7 +11,7 @@ public class Enciper {
                 break;
 
             case "ROT13":
-                ROT13.encryptDecrypt(cipherData.getSentence());
+                ROT13.encryptDecrypt(cipherData);
                 break;
 
             case "PlayFair":
