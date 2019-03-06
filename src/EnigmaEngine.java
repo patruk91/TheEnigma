@@ -13,36 +13,44 @@ public class EnigmaEngine {
         boolean result = false;
         if (args.length < 1 || args[0].equals("--help")) {
             handleHelpMenu();
-        } else if (args[1].equals("Caesar") || args[1].equals("Vigenere")) {
-            if (args.length > 2) {
-                if (args[1].equals("Vigenere") && checkIfContainDigits(args[2])) {
-                    result = true;
-                }
-                else if (args[1].equals("Vigenere") && !checkIfContainDigits(args[2])){
-                    System.out.println("Kye for Vigenere cipher can contain only ketters.");
-                    result = false;
-                } else {
-                    result = true;
-                }
-            } else {
-                System.out.println("Enter KEY after name of cipher");
-                result = false;
-            };
         } else if (args[0].equals("-l")) {
             nameOfCiphers();
         } else if (args[0].equals("-e") || args[0].equals("-d")) {
             if (args.length < 2){
                 System.out.println("Options '-e' or '-d' required additional parameter: name of cipher");
-            } else {
+            } 
+            else { 
                 if (checkIfInCiphers(args[1])) {
+                    if (args[1].equals("Caesar") || args[1].equals("Vigenere")) {
+                        if (args.length > 2) {
+                            if (args[1].equals("Vigenere") && checkIfContainDigits(args[2])) {
+                                result = true;
+                            }
+                            else if (args[1].equals("Vigenere") && !checkIfContainDigits(args[2])){
+                                System.out.println("Kye for Vigenere cipher can contain only ketters.");
+                                result = false;
+                            } else {
+                                result = true;
+                            }
+                        } 
+                        else {
+                            System.out.println("Enter KEY after name of cipher");
+                            result = false;
+                        }
+                    }
                     result = true;
-                } else {
+                }
+                else {
                     System.out.println("Please provide a correct cipher name");
                     result = false;
+                    }
                 }
-            }
         }
-        return result;
+        else {
+            System.out.println("Provide correct option (-l, -e -d --help)");
+            result = false;
+        }
+    return result;
     }
 
     private static void constructCipherData(String[] args) {
@@ -100,6 +108,14 @@ public class EnigmaEngine {
         boolean result = false;
         if (key.matches("[a-zA-Z]+")) {
             result = true;
+        }
+        return result;
+    }
+
+    private static boolean checkForBadOptions(String parameter) {
+        boolean result = true;
+        if (!parameter.contains("-l-e-d")) {
+            result = false;
         }
         return result;
     }
