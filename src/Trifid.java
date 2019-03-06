@@ -4,13 +4,13 @@ public class Trifid {
 
     public static void decrypt(String sentence) {
         sentence = sentence.toUpperCase();
-        int period = getPeriodFromUser();
+        int period = getPeriodFromUser(sentence);
         System.out.println("Decrypted sentence: " + decryptSentence(period, sentence));
     }
 
     public static void encrypt(String sentence) {
         sentence = sentence.toUpperCase();
-        int period = getPeriodFromUser();
+        int period = getPeriodFromUser(sentence);
         System.out.println("Encrypted sentence: " + encryptSentence(period, sentence));
     }
 
@@ -156,20 +156,21 @@ public class Trifid {
     }
 
 
-    private static int getPeriodFromUser() {
+    private static int getPeriodFromUser(String sentence) {
         Scanner reader = new Scanner(System.in);
 
         String userInput;
         int secondKey = 0;
         boolean correctKey = false;
-
+        sentence = sentence.replaceAll("\\s", "");
         while (!correctKey) {
-            System.out.print("Please provide period to encode/decode sentence (range between: 5 - 20): ");
+            System.out.print("Please provide period to encode/decode sentence"
+                    + " (range between: 5 - 20, excluding: " + sentence.length() +"): ");
             userInput = reader.nextLine();
 
             if (Affine.isNumeric(userInput)) {
                 secondKey = Integer.parseInt(userInput);
-                if (5 <= secondKey && secondKey <= 20) {
+                if (5 <= secondKey && secondKey <= 20 && secondKey != sentence.length()) {
                     correctKey = true;
                 }
             }
