@@ -36,7 +36,7 @@ public class CipherData {
     }
 
     public String getSentence() {
-        return this.sentence = askForCorrectSentence(sentence);
+        return this.sentence;
     }
 
     public void setKey(String key) {
