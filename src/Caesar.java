@@ -1,19 +1,22 @@
 public class Caesar {
 
     private static String alfabet = "abcdefghijklmnopqrstuvwxyz".toUpperCase();
-    private static String toFind;
     private static int ind;
+    private static String output = "";
     public static void encrypt(CipherData cipherData) {
         int key = Integer.parseInt(cipherData.getKey());
         String sentence = cipherData.getSentence().toUpperCase();
-        System.out.println("Key: " + key);
-        System.out.println("Sentence: " + sentence);
-        // System.out.println(alfabet.indexOf(sentence.charAt(1)));
+        System.out.println("Key: " + key + "    Sentence: " + sentence);
         for (int i=0; i < sentence.length(); i++) {
             ind = alfabet.indexOf(sentence.charAt(i));
-            System.out.println("Current index: " + sentence.charAt(ind) + " in alfabet: " + ind);
-            System.out.println(alfabet.charAt(ind + key));
+            if (alfabet.length()-1 < ind+key) {
+                ind = key - (alfabet.length()-ind);
+                output = output + alfabet.charAt(ind);
+            } else {
+                output = output + alfabet.charAt(ind + key);
+            }
         }
+        System.out.println("Encrypted message: " + output);
 
     }
 
