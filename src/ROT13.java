@@ -1,10 +1,10 @@
 public class ROT13 {
     private static String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static void encryptDecrypt(String sentence) {
+    public static void encryptDecrypt(CipherData cipherData) {
         String encryptedSentence = "";
-        sentence = sentence.toUpperCase().replace(" ", "");
-        for (int i = 0; i < sentence.length(); i++) {
-            char chr = sentence.charAt(i);
+        cipherData.prepareSentence();
+        for (int i = 0; i < cipherData.getSentence().length(); i++) {
+            char chr = cipherData.getSentence().charAt(i);
             int index = letters.indexOf(chr);
             if (index + 13 > letters.length() - 1) {
                 index = (index + 13)- letters.length();
@@ -16,9 +16,5 @@ public class ROT13 {
 
         }
         System.out.println(encryptedSentence);
-    }
-
-    public static void decrypt(String sentence) {
-        
     }
 }
