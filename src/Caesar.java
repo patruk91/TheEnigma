@@ -5,6 +5,10 @@ public class Caesar {
     private static String output = "";
     public static void encrypt(CipherData cipherData) {
         int key = Integer.parseInt(cipherData.getKey());
+        if (key > 26) {
+            System.out.println("Key should be taken from numbers 0 - 26");
+            return;
+        }
         String sentence = cipherData.getSentence().toUpperCase();
         System.out.println("Key: " + key + "    Sentence: " + sentence);
         for (int i=0; i < sentence.length(); i++) {
@@ -21,8 +25,22 @@ public class Caesar {
     }
 
     public static void decrypt(CipherData cipherData) {
-        System.out.println("Decryption in process");
-        System.out.println("Key: " + cipherData.getKey());
-        System.out.println("Sentence: " + cipherData.getSentence());
+        int key = Integer.parseInt(cipherData.getKey());
+        if (key > 26) {
+            System.out.println("Key should be taken from numbers 0 - 26");
+            return;
+        }
+        String sentence = cipherData.getSentence().toUpperCase();
+        System.out.println("Key: " + key + "    Sentence: " + sentence);
+        for (int i=0; i < sentence.length(); i++) {
+            ind = alfabet.indexOf(sentence.charAt(i));
+            if (ind-key < 0) {
+                ind = alfabet.length() - (key - ind );
+                output = output + alfabet.charAt(ind);
+            } else {
+                output = output + alfabet.charAt(ind - key);
+            }
+        }
+        System.out.println("Decrypted message: " + output);
     }
 }
