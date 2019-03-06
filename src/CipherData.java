@@ -42,4 +42,26 @@ public class CipherData {
     public void setSentence(String sentence) {
         this.sentence = sentence;
     }
+
+    public void prepareSentence() {
+        if (this.cipherName.equals("Trifid")) {
+            this.sentence = this.sentence.toUpperCase().replaceAll("[^a-zA-Z]+", "");
+        }
+        else {
+            this.sentence = this.sentence.toUpperCase().replaceAll("[^a-zA-Z]+", "");
+        }
+    }
+
+    public void prepareKeyForVigenere() {
+        int keyLength = this.key.length();
+        int sentenceLength = this.sentence.length();
+        if (keyLength > sentenceLength) {
+            this.key = (this.key.substring(0, sentenceLength)).toUpperCase();
+        }
+        else {
+            int multiplying = sentenceLength / keyLength;
+            int remainder = sentenceLength % keyLength;
+            this.key = (this.key.repeat(multiplying) + this.key.substring(0, remainder)).toUpperCase();
+        }
+    }
 }
