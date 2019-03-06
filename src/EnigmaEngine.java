@@ -28,14 +28,14 @@ public class EnigmaEngine {
                             }
                             else if (args[1].equals("Vigenere") && !checkIfContainDigits(args[2])){
                                 System.out.println("Kye for Vigenere cipher can contain only ketters.");
-                                result = false;
+                                return false;
                             } else {
                                 result = true;
                             }
-                        } 
+                        }
                         else {
                             System.out.println("Enter KEY after name of cipher");
-                            result = false;
+                            return false;
                         }
                     }
                     result = true;
