@@ -2,20 +2,20 @@ import java.util.*;
 
 public class Trifid {
 
-    public static void decrypt(String sentence) {
+    public static void decrypt(String sentence, CipherData cipherData) {
         sentence = sentence.toUpperCase();
-        if (!isInAlphabet(sentence)) {
-            sentence = askForCorrectSentence(sentence);
+        if (!isInAlphabet(sentence, cipherData)) {
+            sentence = askForCorrectSentence(sentence, cipherData);
         }
 
         int period = getPeriodFromUser(sentence);
         System.out.println("Decrypted sentence: " + decryptSentence(period, sentence));
     }
 
-    public static void encrypt(String sentence) {
+    public static void encrypt(String sentence, CipherData cipherData) {
         sentence = sentence.toUpperCase();
-        if (!isInAlphabet(sentence)) {
-            sentence = askForCorrectSentence(sentence);
+        if (!isInAlphabet(sentence, cipherData)) {
+            sentence = askForCorrectSentence(sentence, cipherData);
         }
 
         int period = getPeriodFromUser(sentence);
@@ -186,21 +186,24 @@ public class Trifid {
         return secondKey;
     }
 
-    private static List<String> createAlphabet() {
+    public static List<String> createAlphabet(CipherData cipherData) {
         int alphabetLength = 26;
         List<String> alphabet = new ArrayList<>();
         for (int i = 0; i < alphabetLength; i++) {
             String alphabetLetter = Character.toString(97 + i);
             alphabet.add(alphabetLetter);
         }
+        if (cipherData.getCipherName().equals("Trifid")) {
             alphabet.add(".");
+
+        }
             alphabet.add(" ");
 
         return alphabet;
     }
 
-    private static boolean isInAlphabet(String sentence) {
-        List<String> alphabet = createAlphabet();
+    public static boolean isInAlphabet(String sentence, CipherData cipherData) {
+        List<String> alphabet = createAlphabet(cipherData);
         char[] charOfSentence = sentence.toCharArray();
         for (char character : charOfSentence) {
             if (!alphabet.contains(character+"")) {
@@ -210,12 +213,11 @@ public class Trifid {
         return true;
     }
 
-    private static String askForCorrectSentence(String sentence) {
-        List<String> alphabet = createAlphabet();
+    public static String askForCorrectSentence(String sentence, CipherData cipherData) {
+        List<String> alphabet = createAlphabet(cipherData);
 
-        while (!isInAlphabet(sentence.toLowerCase())) {
-            String delimiter = ",";
-            String alphabetAsCharacters = String.join(delimiter, Arrays.asList(alphabet.toString()));
+        while (!isInAlphabet(sentence.toLowerCase(), cipherData)) {
+            String alphabetAsCharacters = String.join("", alphabet);
             System.out.print("Letters in sentence need to be in following characters: " + alphabetAsCharacters + "\n");
             sentence = EnigmaEngine.getSentenceFromUser();
         }

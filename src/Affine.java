@@ -4,21 +4,29 @@ public class Affine {
     private static int alphabetLength = 26;
     private static Scanner reader = new Scanner(System.in);
 
-    public static void encrypt(String sentence) {
+    public static void encrypt(String sentence, CipherData cipherData) {
+        sentence = sentence.toLowerCase();
+        if (!Trifid.isInAlphabet(sentence, cipherData)) {
+            sentence = Trifid.askForCorrectSentence(sentence, cipherData).toLowerCase();
+        }
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
         ArrayList<Integer> cParameters = getCParameters(firstKey, secondKey, sentence);
         StringBuilder decryptSentence = decryptOrEncrypt(cParameters);
-        System.out.println("Decrypted sentence: " + decryptSentence);
+        System.out.println("Encrypted sentence: " + decryptSentence);
     }
 
-    public static void decrypt(String sentence) {
+    public static void decrypt(String sentence, CipherData cipherData) {
+        sentence = sentence.toLowerCase();
+        if (!Trifid.isInAlphabet(sentence, cipherData)) {
+            sentence = Trifid.askForCorrectSentence(sentence, cipherData).toLowerCase();
+        }
         int firstKey = getFirstKey();
         int secondKey = getSecondKey();
         int multiInverse = multiplicativeInverse(firstKey);
         ArrayList<Integer> PParameters = getPParameters(secondKey, sentence, multiInverse);
         StringBuilder decryptSentence = decryptOrEncrypt(PParameters);
-        System.out.println("Encrypted sentence: " + decryptSentence);
+        System.out.println("Decrypted sentence: " + decryptSentence);
     }
 
     private static ArrayList<Integer> getPParameters(int secondKey, String sentence, int multiInverse) {
@@ -114,7 +122,7 @@ public class Affine {
         boolean keyInAvailableParameters = false;
 
         while (!keyInAvailableParameters) {
-            System.out.print("Please provide first key to encrypt: ");
+            System.out.print("Please provide second key to encrypt: ");
             userInput = reader.nextLine();
 
             if (isNumeric(userInput)) {

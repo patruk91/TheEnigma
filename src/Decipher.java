@@ -4,7 +4,7 @@ public class Decipher {
     public static void chooseCipher(CipherData cipherData) {
         switch (cipherData.getCipherName()) {
             case "Affine":
-                 Affine.decrypt(cipherData.getSentence());
+                 Affine.decrypt(cipherData.getSentence(), cipherData);
                 break;
 
             case "Caesar":
@@ -20,7 +20,7 @@ public class Decipher {
                 break;
 
             case "Trifid":
-                 Trifid.decrypt(cipherData.getSentence());
+                 Trifid.decrypt(cipherData.getSentence(), cipherData);
                 break;
 
             case "Vigenere":

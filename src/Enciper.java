@@ -3,7 +3,7 @@ public class Enciper {
     public static void chooseCipher(CipherData cipherData) {
         switch(cipherData.getCipherName()) {
             case "Affine":
-                 Affine.encrypt(cipherData.getSentence());
+                 Affine.encrypt(cipherData.getSentence(), cipherData);
                 break;
 
             case "Caesar":
@@ -19,7 +19,7 @@ public class Enciper {
                 break;
 
             case "Trifid":
-                 Trifid.encrypt(cipherData.getSentence());
+                 Trifid.encrypt(cipherData.getSentence(), cipherData);
                 break;
 
             case "Vigenere":
