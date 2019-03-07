@@ -4,7 +4,8 @@ public class Caesar {
     private static int ind;
     private static String output = "";
     public static void encrypt(CipherData cipherData) {
-        int key = Integer.parseInt(cipherData.getKey());
+        try {
+            int key = Integer.parseInt(cipherData.getKey());
         if (key > 26) {
             System.out.println("Key should be taken from numbers 0 - 26");
             return;
@@ -21,11 +22,15 @@ public class Caesar {
             }
         }
         System.out.println("Encrypted message: " + output);
-
+        } catch (NumberFormatException exception) {
+            System.out.println("Enter valid key (number from 1 - 26) ");
+            System.exit(0);
+        };
     }
 
     public static void decrypt(CipherData cipherData) {
-        int key = Integer.parseInt(cipherData.getKey());
+        try {
+            int key = Integer.parseInt(cipherData.getKey());
         if (key > 26) {
             System.out.println("Key should be taken from numbers 0 - 26");
             return;
@@ -42,5 +47,10 @@ public class Caesar {
             }
         }
         System.out.println("Decrypted message: " + output);
+        }
+        catch (NumberFormatException exception) {
+            System.out.println("Enter valid key (number from 1 - 26) ");
+            System.exit(0);
+        };
     }
 }
