@@ -111,13 +111,4 @@ public class EnigmaEngine {
         }
         return result;
     }
-
-    private static boolean checkForBadOptions(String parameter) {
-        boolean result = true;
-        if (!parameter.contains("-l-e-d")) {
-            result = false;
-        }
-        return result;
-    }
-
 }
