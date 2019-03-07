@@ -26,6 +26,10 @@ public class EnigmaEngine {
                             if (args[1].equals("Vigenere") && checkIfContainDigits(args[2])) {
                                 result = true;
                             }
+                            else if (args[1].equals("Caesar") && checkIfContainDigits(args[2])){
+                                System.out.println("Key for Caesar cipher can contain only numbers.");
+                                return false;
+                            }
                             else if (args[1].equals("Vigenere") && !checkIfContainDigits(args[2])){
                                 System.out.println("Kye for Vigenere cipher can contain only ketters.");
                                 return false;
